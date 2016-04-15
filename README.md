@@ -37,7 +37,7 @@ $ Hello John.
 ### httpget
 ```bash
 $ echo 'my ip is: {{ "http://api.ipify.org" | httpget }}' | bin/untem
-& my ip is: 192.0.79.33
+$ my ip is: 192.0.79.33
 ```
 
 ## how to build
