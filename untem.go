@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"os"
 
+	conf "github.com/odedlaz/untemplate-me/config"
 	"github.com/odedlaz/untemplate-me/filters"
 	"github.com/odedlaz/untemplate-me/flags"
 	untemos "github.com/odedlaz/untemplate-me/os"
 )
 
 var (
-	filename = flags.App.Arg("filename", "path to a file containing a valid djanto template (DTL)").ExistingFile()
+	filename       = flags.App.Arg("filename", "path to a file containing a valid djanto template (DTL)").ExistingFile()
+	configFilename = flags.App.Flag("config", "path to config file").Default("untem.yaml").String()
 )
 
 func getTemplateText() (string, error) {
@@ -35,10 +37,17 @@ func main() {
 		flags.Fatal(err.Error())
 		os.Exit(1)
 	}
-	txt, err := filters.UnTemplate(tplText)
+
+	settings, err := conf.Load(*configFilename)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(2)
+	}
+
+	txt, err := filters.UnTemplate(tplText, settings)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(3)
 	}
 	fmt.Print(txt)
 }

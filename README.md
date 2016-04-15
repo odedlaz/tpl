@@ -18,6 +18,37 @@ plus, many times specific filters are missing and I needed a way to add new filt
 
 ## filter usage
 
+### kv
+
+kv support is based of the wonderful work the docker team did with [libkv](https://github.com/docker/libkv).
+
+libkv currently supports:
+* etcd
+* consul
+* zookeeper
+* boltdb
+
+you'll need to create the proper configuration to access a kv store.
+
+for example:
+```yaml
+kv:
+   url: "localhost:2379"
+   type: "etcd" # etcd | consul | zk | boltdb
+   connection-timeout: 10
+   persistent-connection: true
+```
+
+#### kvget
+
+```bash
+$ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/untem --config examples/untem.yml
+$ Hello Jane.
+$ etcdctl set /person/name John
+$ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/untem --config examples/untem.yml
+$ Hello John.
+```
+
 ### getenv
 ```bash
 $ echo 'Hello {{ "NAME" | getenv:"John" }}.' | bin/untem
