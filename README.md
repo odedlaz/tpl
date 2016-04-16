@@ -1,4 +1,4 @@
-# untem (untem)
+# tpl
 A small utility that transforms templates to text.
 
 The idea is to have a bare-bone [confd](http://confd.io) alternative, that follows the unix philosophy: _"Do One Thing and Do It Well"_.
@@ -20,10 +20,10 @@ plus, many times specific filters are missing and I needed a way to add new filt
 
 ### getenv
 ```bash
-$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | bin/untem
+$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | bin/tpl
 $ Hello John.
 # can also work with default values ->
-$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | NAME="Jane" bin/untem
+$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | NAME="Jane" bin/tpl
 $ Hello Jane.
 ```
 
@@ -52,7 +52,7 @@ kv:
 
 ```bash
 $ etcdctl set /person/name John
-$ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/untem --config examples/untem.yml
+$ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/tpl --config examples/tpl.yml
 $ Hello John.
 ```
 
@@ -60,17 +60,17 @@ also works with default values via `kvget:DEFAULT`
 
 ### httpget
 ```bash
-$ echo 'my ip is: {{ "http://api.ipify.org" | httpget }}' | bin/untem
+$ echo 'my ip is: {{ "http://api.ipify.org" | httpget }}' | bin/tpl
 $ my ip is: 192.0.79.33
 ```
 
 ### cat
 
 ```bash
-$ echo 'untem version: {{ "GOPATH" | getenv | stringformat: "%s/src/github.com/odedlaz/untem/VERSION" | cat }}' | bin/untem
+$ echo 'tpl version: {{ "GOPATH" | getenv | stringformat: "%s/src/github.com/odedlaz/tpl/VERSION" | cat }}' | bin/tpl
 # or with variable substitution -
-$ echo "untem version: {{ \"$GOPATH/src/github.com/odedlaz/untem/VERSION\" | cat }}" | bin/untem
-$ untem version: 0.1
+$ echo "tpl version: {{ \"$GOPATH/src/github.com/odedlaz/tpl/VERSION\" | cat }}" | bin/tpl
+$ tpl version: 0.1
 ```
 
 also works with default values via `cat:DEFAULT`
@@ -81,5 +81,5 @@ just run go build as you're used to.
 don't forget to `go-get`!
 
 ```bash
-rm -rf bin/* && go build -o bin/untem
+rm -rf bin/* && go build -o bin/tpl
 ```

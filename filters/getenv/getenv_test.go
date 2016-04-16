@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/odedlaz/untem/template"
+	"github.com/odedlaz/tpl/template"
 )
 
 func TestGetenv(t *testing.T) {

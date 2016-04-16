@@ -8,6 +8,7 @@ import (
 	"github.com/ghodss/yaml"
 )
 
+// Settings tpl settings
 type Settings struct {
 	KV struct {
 		URL               string                 `yaml:"url"`
@@ -22,14 +23,15 @@ type Settings struct {
 	}
 }
 
+// Load the yaml settings from given path
 func Load(filepath string) (*Settings, error) {
 	data, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		return &Settings{}, err
+		return nil, err
 	}
 	settings := Settings{}
 	if err = yaml.Unmarshal([]byte(data), &settings); err != nil {
-		return &Settings{}, err
+		return nil, err
 	}
 	return &settings, nil
 }

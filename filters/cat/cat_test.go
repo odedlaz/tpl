@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/odedlaz/untem/template"
+	"github.com/odedlaz/tpl/template"
 )
 
 var tmpfile *os.File
@@ -14,7 +14,7 @@ var tmpfile *os.File
 // TODO: mock file system calls.
 // maybe use: https://github.com/blang/vfs
 func setup() {
-	tmpfile, _ = ioutil.TempFile("/tmp", "untem")
+	tmpfile, _ = ioutil.TempFile("/tmp", "tpl")
 	tmpfile.Write([]byte("OK"))
 	tmpfile.Close()
 }

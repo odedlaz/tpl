@@ -3,7 +3,7 @@ package HttpGetFilter
 import (
 	"testing"
 
-	"github.com/odedlaz/untem/template"
+	"github.com/odedlaz/tpl/template"
 )
 
 func TestHttpGet(t *testing.T) {

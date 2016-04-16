@@ -5,16 +5,18 @@ import (
 	"strings"
 
 	"github.com/flosch/pongo2"
-	untemos "github.com/odedlaz/untem/os"
+
+	tplos "github.com/odedlaz/tpl/os"
+	"github.com/odedlaz/tpl/template"
 )
 
 func init() {
-	pongo2.RegisterFilter("cat", cat)
+	template.RegisterFilter("cat", cat)
 }
 
 func cat(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
 	filename := in.String()
-	txt, err := untemos.ReadFile(filename)
+	txt, err := tplos.ReadFile(filename)
 
 	if err != nil && param.IsNil() {
 		return nil, &pongo2.Error{

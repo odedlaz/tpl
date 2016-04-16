@@ -11,7 +11,7 @@ import (
 	"github.com/docker/libkv/store/etcd"
 	"github.com/docker/libkv/store/zookeeper"
 	"github.com/flosch/pongo2"
-	"github.com/odedlaz/untem/config"
+	"github.com/odedlaz/tpl/template"
 )
 
 func init() {
@@ -19,27 +19,22 @@ func init() {
 	etcd.Register()
 	zookeeper.Register()
 	boltdb.Register()
-	pongo2.RegisterFilter("kvget", get)
-}
-
-func getSettings() *config.Settings {
-	return pongo2.Globals["settings"].(*config.Settings)
+	template.RegisterFilter("kvget", get)
 }
 
 func get(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
-	settings := getSettings()
 	key := in.String()
 	kv, err := libkv.NewStore(
-		store.Backend(settings.KV.Type),
-		[]string{settings.KV.URL},
+		store.Backend(template.Settings.KV.Type),
+		[]string{template.Settings.KV.URL},
 		&store.Config{
-			ClientTLS:         settings.KV.ClientTLS,
-			TLS:               settings.KV.TLS,
-			Bucket:            settings.KV.Bucket,
-			Username:          settings.KV.Username,
-			Password:          settings.KV.Password,
-			PersistConnection: settings.KV.PersistConnection,
-			ConnectionTimeout: time.Duration(settings.KV.ConnectionTimeout) * time.Second,
+			ClientTLS:         template.Settings.KV.ClientTLS,
+			TLS:               template.Settings.KV.TLS,
+			Bucket:            template.Settings.KV.Bucket,
+			Username:          template.Settings.KV.Username,
+			Password:          template.Settings.KV.Password,
+			PersistConnection: template.Settings.KV.PersistConnection,
+			ConnectionTimeout: time.Duration(template.Settings.KV.ConnectionTimeout) * time.Second,
 		},
 	)
 

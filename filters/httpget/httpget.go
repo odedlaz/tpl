@@ -3,10 +3,11 @@ package HttpGetFilter
 import (
 	"github.com/flosch/pongo2"
 	"github.com/franela/goreq"
+	"github.com/odedlaz/tpl/template"
 )
 
 func init() {
-	pongo2.RegisterFilter("httpget", httpGet)
+	template.RegisterFilter("httpget", httpGet)
 }
 
 func httpGet(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
