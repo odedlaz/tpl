@@ -18,6 +18,15 @@ plus, many times specific filters are missing and I needed a way to add new filt
 
 ## filter usage
 
+### getenv
+```bash
+$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | bin/untem
+$ Hello John.
+# can also work with default values ->
+$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | NAME="Jane" bin/untem
+$ Hello Jane.
+```
+
 ### kv
 
 kv support is based of the wonderful work the docker team did with [libkv](https://github.com/docker/libkv).
@@ -42,34 +51,29 @@ kv:
 #### kvget
 
 ```bash
-$ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/untem --config examples/untem.yml
-$ Hello Jane.
 $ etcdctl set /person/name John
 $ echo 'Hello {{ "/person/name" | kvget:"Jane" }}.' | bin/untem --config examples/untem.yml
 $ Hello John.
 ```
 
-### getenv
-```bash
-$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | bin/untem
-$ Hello John.
-$ echo 'Hello {{ "NAME" | getenv:"John" }}.' | NAME="Jane" bin/untem
-$ Hello Jane.
-```
-
-can also be used with a file:
-
-```bash
-$ echo 'Hello {{ "NAME" | getenv:"John" }}.' > /tmp/john.tpl
-$ bin/untem /tmp/john.tpl
-$ Hello John.
-```
+also works with default values via `kvget:DEFAULT`
 
 ### httpget
 ```bash
 $ echo 'my ip is: {{ "http://api.ipify.org" | httpget }}' | bin/untem
 $ my ip is: 192.0.79.33
 ```
+
+### cat
+
+```bash
+$ echo 'untem version: {{ "GOPATH" | getenv | stringformat: "%s/src/github.com/odedlaz/untem/VERSION" | cat }}' | bin/untem
+# or with variable substitution -
+$ echo "untem version: {{ \"$GOPATH/src/github.com/odedlaz/untem/VERSION\" | cat }}" | bin/untem
+$ untem version: 0.1
+```
+
+also works with default values via `cat:DEFAULT`
 
 ## how to build
 
