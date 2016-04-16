@@ -4,27 +4,27 @@ import (
 	"os"
 	"testing"
 
-	filterTesting "github.com/odedlaz/untemplate-me/testing"
+	"github.com/odedlaz/untem/template"
 )
 
 func TestGetenv(t *testing.T) {
 	os.Setenv("SET", "OK")
 	defer os.Unsetenv("SET")
-	txt, err := filterTesting.UnTemplate(t, "{{ \"SET\"|getenv }}")
+	txt, err := template.Execute("{{ \"SET\"|getenv }}", nil)
 	if txt != "OK" || err != nil {
 		t.Fail()
 	}
 }
 
 func TestGetenvDefaultWhenMissing(t *testing.T) {
-	txt, err := filterTesting.UnTemplate(t, "{{ \"NOT_SET\"|getenv:\"OK\" }}")
+	txt, err := template.Execute("{{ \"NOT_SET\"|getenv:\"OK\" }}", nil)
 	if txt != "OK" || err != nil {
 		t.Fail()
 	}
 }
 
 func TestGetenvMissingFails(t *testing.T) {
-	_, err := filterTesting.UnTemplate(t, "{{ \"NOT_SET\"|getenv }}")
+	_, err := template.Execute("{{ \"NOT_SET\"|getenv }}", nil)
 	if err == nil {
 		t.Fail()
 	}

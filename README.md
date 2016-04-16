@@ -1,4 +1,4 @@
-# untem (untemplate-me)
+# untem (untem)
 A small utility that transforms templates to text.
 
 The idea is to have a bare-bone [confd](http://confd.io) alternative, that follows the unix philosophy: _"Do One Thing and Do It Well"_.

@@ -3,18 +3,18 @@ package HttpGetFilter
 import (
 	"testing"
 
-	filterTesting "github.com/odedlaz/untemplate-me/testing"
+	"github.com/odedlaz/untem/template"
 )
 
 func TestHttpGet(t *testing.T) {
-	txt, err := filterTesting.UnTemplate(t, "{{ \"https://api.ipify.org\" | httpget }}")
+	txt, err := template.Execute("{{ \"https://api.ipify.org\" | httpget }}", nil)
 	if txt == "" || err != nil {
 		t.Fail()
 	}
 }
 
 func TestHttpGetInvalidUrl(t *testing.T) {
-	_, err := filterTesting.UnTemplate(t, "{{ \"invalid\" | httpget }}")
+	_, err := template.Execute("{{ \"invalid\" | httpget }}", nil)
 	if err == nil {
 		t.Errorf("An error should have been thrown when accessing an invalid url: %v", err.Error())
 	}

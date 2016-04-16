@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	conf "github.com/odedlaz/untemplate-me/config"
-	"github.com/odedlaz/untemplate-me/filters"
-	"github.com/odedlaz/untemplate-me/flags"
-	untemos "github.com/odedlaz/untemplate-me/os"
+	"github.com/odedlaz/untem/config"
+	// load all the filters
+	_ "github.com/odedlaz/untem/filters"
+	"github.com/odedlaz/untem/flags"
+	untemos "github.com/odedlaz/untem/os"
+	"github.com/odedlaz/untem/template"
 )
 
 var (
@@ -23,31 +25,43 @@ func getTemplateText() (string, error) {
 
 	// if a filename was passed - use it instead of the pipe
 	if *filename != "" {
-		return untemos.ReadFromFile(*filename)
+		return untemos.ReadFile(*filename)
 	}
 
 	// fallback - read from pipe
 	return untemos.ReadFromStdIn(), nil
 }
 
-func main() {
-	flags.Parse()
-	tplText, err := getTemplateText()
+func Must(txt string, err error) string {
 	if err != nil {
-		flags.Fatal(err.Error())
+		panic(err)
+	}
+	return txt
+}
+
+func main() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}()
+
+	flags.Parse()
+
+	if *filename == "" && !untemos.StdInAvailable() {
+		flags.Fatal("you have to pipe text or pass a filename argument")
 		os.Exit(1)
 	}
 
-	settings, err := conf.Load(*configFilename)
+	settings, err := config.Load(*configFilename)
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(2)
+		fmt.Fprintf(os.Stderr, "couldn't load configuration from '%s', defaulting to none.\n", *configFilename)
 	}
 
-	txt, err := filters.UnTemplate(tplText, settings)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(3)
-	}
+	tplText := Must(getTemplateText())
+
+	txt := Must(template.Execute(tplText, settings))
+
 	fmt.Print(txt)
 }

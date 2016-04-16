@@ -1,4 +1,4 @@
-package kv
+package KeyValueStoreFilter
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	"github.com/docker/libkv/store/etcd"
 	"github.com/docker/libkv/store/zookeeper"
 	"github.com/flosch/pongo2"
-	"github.com/odedlaz/untemplate-me/config"
+	"github.com/odedlaz/untem/config"
 )
 
 func init() {

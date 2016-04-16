@@ -23,10 +23,10 @@ func StdInAvailable() bool {
 	return (stat.Mode() & os.ModeCharDevice) == 0
 }
 
-func ReadFromFile(filename string) (string, error) {
+func ReadFile(filename string) (string, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 	return string(content), nil
 }

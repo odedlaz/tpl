@@ -7,7 +7,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-var App = kingpin.New("untemplate-me", "A command-line un-templating application.")
+var App = kingpin.New("untem", "A command-line un-templating application.")
 
 func Parse() {
 	kingpin.MustParse(App.Parse(os.Args[1:]))
