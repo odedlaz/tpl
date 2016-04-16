@@ -8,6 +8,8 @@ import (
 	"github.com/ghodss/yaml"
 )
 
+const DEFAULT_FILENAME = "tpl.yml"
+
 // Settings tpl settings
 type Settings struct {
 	KV struct {
