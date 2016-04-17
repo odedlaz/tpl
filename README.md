@@ -16,7 +16,36 @@ confd is awesome, but it does much more than just transform templates.
 
 plus, many times specific filters are missing and I needed a way to add new filters easily.
 
-## filter usage
+## how
+
+```bash
+# pipe your template 
+$ echo 'Hello {{ "NAME" | getenv }}.' | bin/tpl
+# or get it from a file
+$ bin/tpl /path/to/template/file
+```
+
+### configuration
+
+some filters might require a config file.
+tpl will default to `tpl.yml`, and if it doesn't exit - will ignore it.
+
+example configuration:
+
+```yaml
+kv:
+   url: "localhost:2379"
+   type: "etcd" # etcd | consul | zk | boltdb
+   bucket: mybucket
+   connection-timeout: 10
+   persistent-connection: true
+```
+
+* currently, only ``kv`` filter requires a config file.
+
+## filters
+
+pongo2 currently supports all [django 1.7 filters](https://docs.djangoproject.com/en/1.7/ref/templates/builtins/).
 
 ### getenv
 ```bash
