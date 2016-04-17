@@ -2,6 +2,8 @@ package template
 
 import (
 	"errors"
+	"regexp"
+	"strings"
 
 	"github.com/flosch/pongo2"
 	"github.com/odedlaz/tpl/config"
@@ -13,7 +15,10 @@ import (
 var Filters = []string{}
 
 // Settings global settings
-var Settings = config.Settings{}
+var (
+	Settings             = config.Settings{}
+	stripEmptyLinesRegex = regexp.MustCompile("\n\n")
+)
 
 // Must panics if err != nil. otherwise, returns the text
 func Must(txt string, err error) string {
@@ -46,7 +51,12 @@ func Execute(tpltxt string) (string, error) {
 		return "", err
 	}
 
-	return tpl.Execute(pongo2.Context{})
+	txt, err := tpl.Execute(pongo2.Context{})
+	if err != nil {
+		return "", err
+	}
+
+	return strings.TrimSuffix(stripEmptyLinesRegex.ReplaceAllString(txt, "\n"), "\n"), nil
 }
 
 // RegisterFilter adds a new filter to pongo2
