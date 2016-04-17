@@ -15,7 +15,7 @@ import (
 )
 
 // VERSION current version of the app
-const VERSION = "0.1"
+const VERSION = "0.2-dev"
 
 // default config path
 
