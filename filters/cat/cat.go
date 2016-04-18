@@ -1,8 +1,10 @@
 package CatFilter
 
 import (
+	"bytes"
 	"fmt"
-	"strings"
+	"os"
+	"path/filepath"
 
 	"github.com/flosch/pongo2"
 
@@ -14,20 +16,38 @@ func init() {
 	template.RegisterFilter("cat", cat)
 }
 
-func cat(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
-	filename := in.String()
-	txt, err := tplos.ReadFile(filename)
+func readAllFiles(paths []string) string {
+	var buffer bytes.Buffer
+	for _, path := range paths {
+		txt, err := tplos.ReadFile(path)
+		if err != nil {
+			// skip invalid paths, but don't ignore them!
+			fmt.Fprintf(os.Stderr, "cat: %s: %v\n", path, err.Error())
+			continue
+		}
+		buffer.WriteString(fmt.Sprintln(txt))
+	}
 
-	if err != nil && param.IsNil() {
+	return buffer.String()
+}
+
+func cat(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
+	path := in.String()
+	paths, err := filepath.Glob(path)
+	if err != nil {
 		return nil, &pongo2.Error{
 			Sender:   "filter:cat",
-			ErrorMsg: fmt.Sprintf("problem accessing '%s': %v", filename, err.Error()),
+			ErrorMsg: fmt.Sprintf("error glob from '%s': %v", path, err.Error()),
+		}
+	}
+	txt := readAllFiles(paths)
+
+	if txt == "" {
+		return nil, &pongo2.Error{
+			Sender:   "filter:cat",
+			ErrorMsg: fmt.Sprintf("no readable files at '%s'", path),
 		}
 	}
 
-	if err == nil {
-		return pongo2.AsValue(strings.TrimSuffix(txt, "\n")), nil
-	}
-
-	return pongo2.AsValue(param.String()), nil
+	return pongo2.AsValue(fmt.Sprintf("%s\n", txt)), nil
 }
