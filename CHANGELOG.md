@@ -5,10 +5,13 @@
 
 # v0.2-dev
 
-new filters:
-* stringsplit
+new features:
+
+* stringsplit filter
+* edit in place flag (similar to sed -i)
 
 changes:
+
 * cat now supports glob: `{{ "/path/to/dir/\*" | cat }}`
 
 # v0.1
