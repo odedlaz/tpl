@@ -165,5 +165,10 @@ just run go build as you're used to.
 don't forget to `go-get`!
 
 ```bash
-rm -rf bin/* && go build -o bin/tpl
+# build for your architecture
+go build -o bin/tpl
+# build for alpine
+CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/tpl
 ```
+
+I'll add a Makefile soon.
