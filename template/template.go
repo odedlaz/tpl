@@ -3,7 +3,6 @@ package template
 import (
 	"errors"
 	"regexp"
-	"strings"
 
 	"github.com/flosch/pongo2"
 	"github.com/odedlaz/tpl/config"
@@ -56,7 +55,7 @@ func Execute(tpltxt string) (string, error) {
 		return "", err
 	}
 
-	return strings.TrimSuffix(stripEmptyLinesRegex.ReplaceAllString(txt, "\n"), "\n"), nil
+	return stripEmptyLinesRegex.ReplaceAllString(txt, "\n"), nil
 }
 
 // RegisterFilter adds a new filter to pongo2

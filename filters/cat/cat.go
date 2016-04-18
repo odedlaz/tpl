@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/flosch/pongo2"
 
@@ -48,6 +49,5 @@ func cat(in *pongo2.Value, param *pongo2.Value) (*pongo2.Value, *pongo2.Error) {
 			ErrorMsg: fmt.Sprintf("no readable files at '%s'", path),
 		}
 	}
-
-	return pongo2.AsValue(fmt.Sprintf("%s\n", txt)), nil
+	return pongo2.AsValue(strings.TrimSuffix(txt, "\n")), nil
 }
