@@ -32,15 +32,7 @@ func TestMain(m *testing.M) {
 
 func TestCat(t *testing.T) {
 	tpl := fmt.Sprintf("{{ \"%s\" | cat }}", tmpfile.Name())
-	txt, err := template.Execute(tpl, nil)
-	if txt != "OK" || err != nil {
-		t.Fail()
-	}
-}
-
-func TestCatDefaultWhenMissing(t *testing.T) {
-	tpl := "{{ \"/no/path\" | cat:\"OK\" }}"
-	txt, err := template.Execute(tpl, nil)
+	txt, err := template.Execute(tpl)
 	if txt != "OK" || err != nil {
 		t.Fail()
 	}
@@ -48,8 +40,8 @@ func TestCatDefaultWhenMissing(t *testing.T) {
 
 func TestCatMissingFails(t *testing.T) {
 	tpl := "{{ \"/no/path\" | cat }}"
-	_, err := template.Execute(tpl, nil)
+	txt, err := template.Execute(tpl)
 	if err == nil {
-		t.Fail()
+		t.Errorf("got a test, altough we shouldn't have: %s", txt)
 	}
 }
