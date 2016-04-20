@@ -52,7 +52,7 @@ what if you want to create several Dockerfile(s) for different Elasticsearch ver
 
 ```bash
 FROM elasticsearch:{{"VERSION" | getenv:"latest" }}
-MAINTAINER Oded odedlaz@gmail.com
+MAINTAINER Oded odedlaz@example.com
 
 {% if "PLUGINS" | getenv:"" != "" %}
 # install all the plugins
@@ -68,17 +68,17 @@ now run it!
 # without any arguments
 $ bin/tpl /path/to/Dockerfile.tpl
 FROM elasticsearch:latest
-MAINTAINER Oded odedlaz@gmail.com
+MAINTAINER Oded odedlaz@example.com
 
 # with VERSION env variable
 $ VERSION="1.7" bin/tpl /path/to/Dockerfile.tpl
 FROM elasticsearch:1.7
-MAINTAINER Oded odedlaz@gmail.com
+MAINTAINER Oded odedlaz@example.com
 
 # with the kopf and marvel plugins
 $ VERSION="1.7" PLUGINS="kopf,marvel" bin/tpl /path/to/Dockerfile.tpl
 FROM elasticsearch:1.7
-MAINTAINER Oded odedlaz@gmail.com
+MAINTAINER Oded odedlaz@example.com
 
 # install all the plugins
 RUN usr/share/elasticsearch/bin/plugin install kopf
