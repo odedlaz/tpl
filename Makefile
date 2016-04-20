@@ -16,6 +16,10 @@ build:
 build-alpine:
 	CGO_ENABLED=0 go build ${LDFLAGS} -a -installsuffix cgo -o ${SOURCEDIR}/bin/${BINARY}-alpine
 
+.PHONY: test
+test:
+	go test ./...
+
 .PHONY: install
 install:
 	go install ${LDFLAGS}
