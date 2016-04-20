@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/flosch/pongo2"
-	"github.com/odedlaz/tpl/config"
 
-	tplos "github.com/odedlaz/tpl/os"
+	"github.com/odedlaz/tpl/core/config"
+	tplos "github.com/odedlaz/tpl/core/os"
 )
 
 // Filters all tpl registered filters

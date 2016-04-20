@@ -9,7 +9,7 @@ import (
 
 	"github.com/flosch/pongo2"
 
-	tplos "github.com/odedlaz/tpl/os"
+	tplos "github.com/odedlaz/tpl/core/os"
 	"github.com/odedlaz/tpl/template"
 )
 

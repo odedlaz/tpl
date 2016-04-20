@@ -8,11 +8,12 @@ import (
 
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/odedlaz/tpl/config"
 	// load all the filters
 	_ "github.com/odedlaz/tpl/filters"
-	tplos "github.com/odedlaz/tpl/os"
-	tplpath "github.com/odedlaz/tpl/os/path"
+
+	"github.com/odedlaz/tpl/core/config"
+	tplos "github.com/odedlaz/tpl/core/os"
+	tplpath "github.com/odedlaz/tpl/core/os/path"
 	tpl "github.com/odedlaz/tpl/template"
 )
 
