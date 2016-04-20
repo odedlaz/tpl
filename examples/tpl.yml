@@ -1,5 +1,0 @@
-kv:
-   url: "localhost:2379"
-   type: "etcd"
-   connection-timeout: 10
-   persistent-connection: true
