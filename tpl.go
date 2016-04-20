@@ -11,20 +11,19 @@ import (
 	// load all the filters
 	_ "github.com/odedlaz/tpl/filters"
 
+	"github.com/odedlaz/tpl/core"
 	"github.com/odedlaz/tpl/core/config"
 	tplos "github.com/odedlaz/tpl/core/os"
 	tplpath "github.com/odedlaz/tpl/core/os/path"
 	tpl "github.com/odedlaz/tpl/template"
 )
 
-// VERSION current version of the app
-const VERSION = "0.2-dev"
-
 // default config path
 
 func printVersion(ctx *kingpin.ParseContext) error {
-	fmt.Printf("tpl %s\n", VERSION)
-	fmt.Printf("filters: %s\n", strings.Join(tpl.Filters, ", "))
+	fmt.Printf("tpl %s\nFilters: %s\n",
+		core.Version,
+		strings.Join(tpl.Filters, " "))
 	os.Exit(0)
 	return nil
 }
