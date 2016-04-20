@@ -10,9 +10,12 @@ import (
 
 	// load all the filters
 	_ "github.com/odedlaz/tpl/filters"
+	// load all the functions
+	_ "github.com/odedlaz/tpl/functions"
 
 	"github.com/odedlaz/tpl/core"
 	"github.com/odedlaz/tpl/core/config"
+	tplenum "github.com/odedlaz/tpl/core/enumerable"
 	tplos "github.com/odedlaz/tpl/core/os"
 	tplpath "github.com/odedlaz/tpl/core/os/path"
 	tpl "github.com/odedlaz/tpl/template"
@@ -21,9 +24,10 @@ import (
 // default config path
 
 func printVersion(ctx *kingpin.ParseContext) error {
-	fmt.Printf("tpl %s\nFilters: %s\n",
+	fmt.Printf("tpl %s\nFilters: %s\nFunctions: %s\n",
 		core.Version,
-		strings.Join(tpl.Filters, " "))
+		strings.Join(tpl.Filters, " "),
+		strings.Join(tplenum.MapKeys(tpl.Functions), " "))
 	os.Exit(0)
 	return nil
 }

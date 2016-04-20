@@ -14,6 +14,9 @@ import (
 // Filters all tpl registered filters
 var Filters = []string{}
 
+// Functions all tpl registered functions
+var Functions = pongo2.Context{}
+
 // Settings global settings
 var (
 	Settings = config.Settings{}
@@ -52,7 +55,7 @@ func Execute(tpltxt string) (string, error) {
 		return "", err
 	}
 
-	txt, err := tpl.Execute(pongo2.Context{})
+	txt, err := tpl.Execute(Functions)
 	if err != nil {
 		return "", err
 	}
@@ -64,6 +67,11 @@ func Execute(tpltxt string) (string, error) {
 func RegisterFilter(name string, fn pongo2.FilterFunction) {
 	pongo2.RegisterFilter(name, fn)
 	Filters = append(Filters, name)
+}
+
+// RegisterFunction adds a new function to pongo2
+func RegisterFunction(name string, fn interface{}) {
+	Functions[name] = fn
 }
 
 // RegisterSettings adds a global settings to pongo
