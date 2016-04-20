@@ -1,8 +1,7 @@
 SOURCEDIR=.
 BINARY=tpl
-VERSION=0.2-dev
-BUILD_TIME=`date +%FT%T%z`
-LDFLAGS=-ldflags "-X github.com/odedlaz/tpl/core.Version=${VERSION} -X github.com/odedlaz/tpl/core.BuildTime=${BUILD_TIME}"
+
+LDFLAGS=-ldflags "-X github.com/odedlaz/tpl/core.build=`git rev-parse HEAD`"
 
 .DEFAULT_GOAL: all
 
