@@ -2,7 +2,6 @@ SOURCEDIR=.
 BINARY=tpl
 VERSION=0.2-dev
 BUILD_TIME=`date +%FT%T%z`
-
 LDFLAGS=-ldflags "-X github.com/odedlaz/tpl/core.Version=${VERSION} -X github.com/odedlaz/tpl/core.BuildTime=${BUILD_TIME}"
 
 .DEFAULT_GOAL: all
@@ -10,14 +9,13 @@ LDFLAGS=-ldflags "-X github.com/odedlaz/tpl/core.Version=${VERSION} -X github.co
 .PHONY: all
 all: build build-alpine
 
-
 .PHONY: build
 build:
-		go build ${LDFLAGS} -o ${SOURCEDIR}/bin/${BINARY}
+	go build ${LDFLAGS} -o ${SOURCEDIR}/bin/${BINARY}
 
 .PHONY: build-alpine
 build-alpine:
-		CGO_ENABLED=0 go build ${LDFLAGS} -a -installsuffix cgo -o ${SOURCEDIR}/bin/${BINARY}-alpine
+	CGO_ENABLED=0 go build ${LDFLAGS} -a -installsuffix cgo -o ${SOURCEDIR}/bin/${BINARY}-alpine
 
 .PHONY: install
 install:
