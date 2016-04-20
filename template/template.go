@@ -3,6 +3,7 @@ package template
 import (
 	"errors"
 	"regexp"
+	"strings"
 
 	"github.com/flosch/pongo2"
 	"github.com/odedlaz/tpl/config"
@@ -15,8 +16,9 @@ var Filters = []string{}
 
 // Settings global settings
 var (
-	Settings             = config.Settings{}
-	stripEmptyLinesRegex = regexp.MustCompile("\n\n")
+	Settings = config.Settings{}
+	// remove any empty lines (even if there are spaces between them)
+	stripEmptyLinesRegex = regexp.MustCompile("\n\\s*\n\\s*\n")
 )
 
 // Must panics if err != nil. otherwise, returns the text
@@ -54,8 +56,8 @@ func Execute(tpltxt string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	return stripEmptyLinesRegex.ReplaceAllString(txt, "\n"), nil
+	txt = stripEmptyLinesRegex.ReplaceAllString(txt, "\n")
+	return strings.TrimLeft(txt, "\n"), nil
 }
 
 // RegisterFilter adds a new filter to pongo2
