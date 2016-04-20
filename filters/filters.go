@@ -12,4 +12,6 @@ import (
 	_ "github.com/odedlaz/tpl/filters/cat"
 	// stringsplit filter
 	_ "github.com/odedlaz/tpl/filters/stringsplit"
+	// pathexists filter
+	_ "github.com/odedlaz/tpl/filters/pathexists"
 )

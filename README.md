@@ -148,6 +148,13 @@ $ echo 'my ip is: {{ "http://api.ipify.org" | httpget }}' | bin/tpl
 my ip is: 192.0.79.33
 ```
 
+### pathexists
+```bash
+$ tmpfile=$(mktemp)
+$ echo 'does the file exist? {% if "tmpfile" | getenv | pathexists %}yes{% else %}no{% endif %}' | bin/tpl
+does the file exist? yes
+```
+
 ### cat
 
 ```bash
