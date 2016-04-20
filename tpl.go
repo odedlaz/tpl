@@ -34,21 +34,22 @@ func handleUnhandledError() {
 	}
 }
 
-func editInPlace(text, templateText string) {
-	mode, err := tplpath.FileMode(*templateFilename)
-	if err != nil {
-		app.Fatalf("edit file (%s) in place: %v, try --help", *configFilename, err.Error())
+func editInPlace(text string) (err error) {
+	var mode os.FileMode
+
+	if mode, err = tplpath.FileMode(*templateFilename); err != nil {
+		return err
 	}
 
-	filesToWrite := map[string]string{
-		fmt.Sprintf("%s.bak", *templateFilename): templateText,
-		*templateFilename:                        text}
-
-	for filename, txt := range filesToWrite {
-		ioutil.WriteFile(filename,
-			[]byte(txt),
-			mode)
+	if err = os.Rename(*templateFilename, fmt.Sprintf("%s.bak", *templateFilename)); err != nil {
+		return err
 	}
+
+	if err = ioutil.WriteFile(*templateFilename, []byte(text), mode); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 var (
@@ -84,9 +85,12 @@ func main() {
 
 	text := tpl.Must(tpl.Execute(templateText))
 
-	if *edit {
-		editInPlace(text, templateText)
+	if !*edit {
+		fmt.Print(text)
 		return
 	}
-	fmt.Print(text)
+
+	if err := editInPlace(text); err != nil {
+		app.Fatalf("edit file (%s) in place: %v, try --help", *templateFilename, err)
+	}
 }
