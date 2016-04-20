@@ -1,9 +1,9 @@
 package HttpGetFilter
 
 import (
-	"github.com/flosch/pongo2"
 	"github.com/franela/goreq"
 	"github.com/odedlaz/tpl/template"
+	"gopkg.in/flosch/pongo2.v3"
 )
 
 func init() {

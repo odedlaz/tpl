@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/flosch/pongo2"
+	"gopkg.in/flosch/pongo2.v3"
 
 	"github.com/odedlaz/tpl/core/config"
 	tplos "github.com/odedlaz/tpl/core/os"

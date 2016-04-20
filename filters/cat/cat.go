@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/flosch/pongo2"
+	"gopkg.in/flosch/pongo2.v3"
 
 	tplos "github.com/odedlaz/tpl/core/os"
 	"github.com/odedlaz/tpl/template"
