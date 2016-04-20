@@ -1,12 +1,13 @@
 # CHANGELOG
 
-- [v0.2](#v02)
+- [v0.2](#v02-dev)
 - [v0.1](#v01)
 
 # v0.2-dev
 
 new features:
 
+* pathexists filter
 * stringsplit filter
 * edit in place flag (similar to sed -i)
 
