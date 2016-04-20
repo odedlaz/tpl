@@ -56,7 +56,7 @@ var (
 	app              = kingpin.New("tpl", "A command-line un-templating application.")
 	edit             = app.Flag("in-place", "edit files in place (if --filename was supplied)").Short('i').Bool()
 	templateFilename = app.Arg("filename", "path to a file containing a valid djanto template (DTL)").ExistingFile()
-	configFilename   = app.Flag("config", "path to config file").Default(config.DEFAULT_FILENAME).String()
+	configFilename   = app.Flag("config", "path to config file").Default(config.DefaultFilename).String()
 	showVersion      = app.Flag("version", "show version and quit").Action(printVersion).Bool()
 )
 
@@ -77,7 +77,7 @@ func main() {
 	// if the file doesn't exit -> ignore
 	if settings, err := config.Load(*configFilename); err == nil {
 		tpl.RegisterSettings(settings)
-	} else if !os.IsNotExist(err) || *configFilename != config.DEFAULT_FILENAME {
+	} else if !os.IsNotExist(err) || *configFilename != config.DefaultFilename {
 		app.Fatalf("loading config from: '%s': %v, try --help", *configFilename, err.Error())
 	}
 

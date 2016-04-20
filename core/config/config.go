@@ -8,8 +8,8 @@ import (
 	"github.com/ghodss/yaml"
 )
 
-// DEFAULT_FILENAME the default filename for the configuration
-const DEFAULT_FILENAME = "tpl.yml"
+// DefaultFilename the default filename for the configuration
+const DefaultFilename = "tpl.yml"
 
 // Settings tpl settings
 type Settings struct {
